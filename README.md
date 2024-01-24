@@ -1,6 +1,6 @@
 <h1 align="center">TermUI</h1>
 <h3 align="center">
-A texta based library, ncurses like fully written in python without external libraries</h3>
+A text based library, ncurses like, fully written in python without external libraries</h3>
 
 ## Table of funcions and clases
 ### Styling
