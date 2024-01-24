@@ -1,7 +1,10 @@
 from os import get_terminal_size
+from sys import stdout
+from re import compile, findall
+from time import sleep
+
 class screen:
-    def _NoAnsi(self, text):
-        from re import compile, findall     
+    def _NoAnsi(self, text):  
         noAnsi = compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
         Ansi = findall(r"\x1B\[[0-?]*[ -/]*[@-~]", text)
         return noAnsi.sub("", text), Ansi
@@ -16,14 +19,14 @@ class screen:
             for j in range(winx):
                 # Calcular las coordenadas en la matriz grande
                 xmain, ymain = x + i, y + j
-                # Verificar si las coordenadas están dentro de la matriz grande
+                # Verificar si las coordenadas están dentro de la amatriz grande
                 if 0 <= xmain < len(win) and 0 <= ymain < len(win[0]):
                     win[xmain][ymain] = matrix[i][j]
 
     def Update(self):
-        print("\x1b[?1049h\x1b[H" + "\n".join([''.join(n) for n in self.Stdscr]), end="")
-        print("\x1b[?1049l", end="") # Reset to normal buffer
-
+        stdout.buffer.write(bytes("\x1b[?1049h\x1b[H" + '\n'.join([''.join(n) for n in self.Stdscr]), encoding="utf-8"))
+        stdout.buffer.write(b"\x1b[?1049l") # Reset to normal buffer
+        
     def Init(self, width=get_terminal_size().columns, height=get_terminal_size().lines):
         
         self.width, self.height = width, height
@@ -81,7 +84,7 @@ class screen:
         toPlot = color + "".join(yourChr[:1]) + "\x1b[0m"
         self._Plotter([[toPlot]], x, y, Win)
 
-    def AddStr(self, x=int, y=int, yourStr=str, win=list, color=""):
+    def AddStr(self, x=int, y=int, yourStr=str, win=int, color=""):
         Win = win[2]
         toPlot = [f"{color}{i}\x1b[0m" for i in [*yourStr]]
         self._Plotter([toPlot], x, y, Win)

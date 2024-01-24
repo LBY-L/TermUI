@@ -17,3 +17,4 @@ setup(
         "Operating System :: Linux, Windows",
     ]
 )
+# ping is gay?!...

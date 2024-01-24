@@ -10,6 +10,8 @@ def Main():
         Term.Corners(window)
         Term.WRefresh(window)
         Term.Update()
-        sleep(0.1)
+        key = TermUI.getchar()
+        if key == 3:
+            break
 
-Term.Wrapper(func=Main, asciiMode=True)
+Term.Wrapper(func=Main, asciiMode=False)
