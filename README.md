@@ -27,8 +27,19 @@ A text based library, ncurses like, fully written in python without external lib
 | ---      | ---                           | 
 | getchar  | Get the key presses in numbers|
 ### Screen
-| Class  | Function | What does?                                 |
-| ---    | ---      | ---                                        |
-| screen | Init     | Initializes de main buffer                 |
-| screen | Win      | Initializes a windows into the main buffer |
-| screen | 
+| Class  | Function | What does?                               |
+| ---    | ---      | ---                                      |
+| screen | Init     | Initializes de main window               |
+| screen | Win      | Initializes a windows in the main window |
+| screen | WinMove  | Move a window                            |
+| screen | WRefresh | Refresh the window in main window        |
+| screen | Corners  | Put corners in a window object           |
+| screen | AddChr   | Add a single character to a window object|
+| screen | AddStr   | Add a string in a window object          |
+| screen | Clear    | Clear a window object                    |
+| screen | Update   | Print the windows in the screen          |
+| screen | Wrapper  | Usa function to execute                  |
+| screen | Cols     | Return main window width                 |
+| screen | Lines    | Retunr main window height                |  
+
+### Showcase
