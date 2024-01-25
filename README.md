@@ -45,9 +45,56 @@ A text based library, ncurses like, fully written in python without external lib
 ### Showcase
 ![](https://github.com/LBY-L/TermUI/blob/main/showcase.gif)
 ---
-#### Demos 
 
-
+### Demos 
+**/Test/keysmove.py**
 ```python
+import TermUI
+from time import sleep
+Term = TermUI.screen()
 
+def Main():
+    stdscr = Term.Init()
+    posX = 1
+    posY = 1
+    while True:
+        Term.Corners(stdscr)
+        Term.AddChr(posX, posY, "i", stdscr, color=TermUI.Green())
+        Term.Update()
+        Term.Clear(stdscr)
+        key = TermUI.getchar()
+        if key == 3:
+            break
+        if key == 119:
+            posY -= 1
+        if key == 115:
+            posY += 1
+        if key == 97:
+            posX -= 1
+        if key == 100:
+            posX += 1
+
+Term.Wrapper(func=Main, asciiMode=False)
+```
+---
+
+**/Tests/windows.py**
+```python
+import TermUI
+from time import sleep
+Term = TermUI.screen()
+
+def Main():
+    stdscr = Term.Init()
+    while True:
+        Term.Corners(stdscr)
+        window = Term.Win(1, 1, 40, 20)
+        Term.Corners(window)
+        Term.WRefresh(window)
+        Term.Update()
+        key = TermUI.getchar()
+        if key == 3:
+            break
+
+Term.Wrapper(func=Main, asciiMode=True)
 ```
