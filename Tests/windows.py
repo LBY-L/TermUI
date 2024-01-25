@@ -14,4 +14,4 @@ def Main():
         if key == 3:
             break
 
-Term.Wrapper(func=Main, asciiMode=False)
+Term.Wrapper(func=Main, asciiMode=True)

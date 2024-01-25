@@ -44,3 +44,6 @@ A text based library, ncurses like, fully written in python without external lib
 
 ### Showcase
 ![](https://github.com/LBY-L/TermUI/blob/main/showcase.gif)
+---
+#### Demos 
+

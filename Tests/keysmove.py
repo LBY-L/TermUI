@@ -16,7 +16,6 @@ def Main():
             break
         if key == 119:
             posY -= 1
-        #print(key)
         if key == 115:
             posY += 1
         if key == 97:
@@ -24,4 +23,4 @@ def Main():
         if key == 100:
             posX += 1
 
-Term.Wrapper(func=Main, asciiMode=True)
+Term.Wrapper(func=Main, asciiMode=False)
