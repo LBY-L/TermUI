@@ -3,10 +3,9 @@ from setuptools import setup, find_packages
 setup(
     name="TermUI",
     python_requires='>=3.8',
-    version="1.0.0",
+    version="1.0.1",
     author="LBY_L",
     license='GNU General Public License 3.0 (GPL 3.0)',
-    description="Libray for creating intuitive tui interfaces",
     packages=find_packages(),
     install_requires=[],
     keywords=['tui'],
@@ -17,4 +16,4 @@ setup(
         "Operating System :: Linux, Windows",
     ]
 )
-# ping is gay?!...
+# AnotherPing is gay?!...
