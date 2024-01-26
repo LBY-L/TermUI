@@ -47,6 +47,7 @@ A text based library, ncurses like, fully written in python without external lib
 ---
 
 ## Demos 
+
 **/Test/keysmove.py**
 ```python
 import TermUI
@@ -55,30 +56,39 @@ Term = TermUI.screen()
 
 def Main():
     stdscr = Term.Init()
-    posX = 1
-    posY = 1
+    Term.Corners(stdscr)
+    y = Term.Lines()
+    x = Term.Cols()
+    Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
     while True:
-        Term.Corners(stdscr)
-        Term.AddChr(posX, posY, "i", stdscr, color=TermUI.Green())
+        
+        window = Term.Win(1, 1, x-2, (y-2)//2)
+        window2 = Term.Win(1, y//2, (x-2)//2, (y-2)//2)
+        window3 = Term.Win(x//2, y//2, (x-2)//2, (y-2)//2)
+
+        Term.Corners(window, color=TermUI.Green())
+        Term.Corners(window2, color=TermUI.Red())
+        Term.Corners(window3, color=TermUI.Blue())
+
+        Term.AddStr(1, 1, "This is TermUI", window, color=TermUI.Green())
+        Term.AddStr(1, 1, "This is a window", window2, color=TermUI.Red())
+        Term.AddStr(1, 1, "This is other window", window3, color=TermUI.Blue())
+
+        Term.WRefresh(window)
+        Term.WRefresh(window2)
+        Term.WRefresh(window3)
+
         Term.Update()
-        Term.Clear(stdscr)
+
         key = TermUI.getchar()
-        if key == 3:
+        if key == 3: # Key 3 = Ctrl + C
             break
-        if key == 119:
-            posY -= 1
-        if key == 115:
-            posY += 1
-        if key == 97:
-            posX -= 1
-        if key == 100:
-            posX += 1
 
 Term.Wrapper(func=Main, asciiMode=False)
 ```
 ---
 
-**/Tests/windows.py**
+**/Test/windows.py**
 ```python
 import TermUI
 from time import sleep
@@ -86,15 +96,33 @@ Term = TermUI.screen()
 
 def Main():
     stdscr = Term.Init()
+    Term.Corners(stdscr)
+    y = Term.Lines()
+    x = Term.Cols()
+    Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
     while True:
-        Term.Corners(stdscr)
-        window = Term.Win(1, 1, 40, 20)
-        Term.Corners(window)
+        
+        window = Term.Win(1, 1, x-2, (y-2)//2)
+        window2 = Term.Win(1, y//2, (x-2)//2, (y-2)//2)
+        window3 = Term.Win(x//2, y//2, (x-2)//2, (y-2)//2)
+
+        Term.Corners(window, color=TermUI.Green())
+        Term.Corners(window2, color=TermUI.Red())
+        Term.Corners(window3, color=TermUI.Blue())
+
+        Term.AddStr(1, 1, "This is TermUI", window, color=TermUI.Green())
+        Term.AddStr(1, 1, "This is a window", window2, color=TermUI.Red())
+        Term.AddStr(1, 1, "This is other window", window3, color=TermUI.Blue())
+
         Term.WRefresh(window)
+        Term.WRefresh(window2)
+        Term.WRefresh(window3)
+
         Term.Update()
+
         key = TermUI.getchar()
-        if key == 3:
+        if key == 3: # Key 3 = Ctrl + C
             break
 
-Term.Wrapper(func=Main, asciiMode=True)
+Term.Wrapper(func=Main, asciiMode=False)
 ```
