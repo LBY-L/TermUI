@@ -42,11 +42,11 @@ A text based library, ncurses like, fully written in python without external lib
 | screen | Cols     | Return main window width                 |
 | screen | Lines    | Retunr main window height                |  
 
-### Showcase
+## Showcase
 ![](https://github.com/LBY-L/TermUI/blob/main/showcase.gif)
 ---
 
-### Demos 
+## Demos 
 **/Test/keysmove.py**
 ```python
 import TermUI
