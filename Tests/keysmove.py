@@ -8,7 +8,7 @@ def Main():
     posY = 1
     while True:
         Term.Corners(stdscr)
-        Term.AddChr(posX, posY, "i", stdscr, color=TermUI.Green())
+        Term.AddChr(posX, posY, "x", stdscr, color=TermUI.Green())
         Term.Update()
         Term.Clear(stdscr)
         key = TermUI.getchar()

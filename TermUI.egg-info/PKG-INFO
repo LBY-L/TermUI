@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: TermUI
+Version: 1.0.1
+Author: LBY_L
+License: GNU General Public License 3.0 (GPL 3.0)
+Keywords: tui
+Classifier: Development Status :: IDK bro im just developing
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Linux, Windows
+Requires-Python: >=3.8
+License-File: LICENSE
