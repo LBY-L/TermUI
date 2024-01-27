@@ -1,6 +1,7 @@
 from os import get_terminal_size
 from sys import stdout
 from re import compile, findall
+from os import name
 
 class screen:
     def _NoAnsi(self, text):  
@@ -23,7 +24,10 @@ class screen:
                     win[xmain][ymain] = matrix[i][j]
 
     def Update(self):
-        stdout.buffer.write(bytes("\x1b[H" + '\n'.join([''.join(n) for n in self.Stdscr]), encoding="utf-8"))
+        if name == "nt": # Just a random error
+            print("\x1b[H" + '\n'.join([''.join(n) for n in self.Stdscr]), end="", flush=True)
+        else:
+            stdout.buffer.write(bytes("\x1b[H" + '\n'.join([''.join(n) for n in self.Stdscr]), encoding="utf-8"))
         
     def _Init(self):
         self.width, self.height = get_terminal_size().columns, get_terminal_size().lines 
@@ -33,10 +37,9 @@ class screen:
     
     def Wrapper(self, func, asciiMode=False):
         self.asciiMode = asciiMode
+
         stdout.buffer.write(b"\x1b[?1049h\x1b[?25l")
-
         func(screen=self._Init())
-
         stdout.buffer.write(b"\x1b[?1049l\x1b[?25h") # Reset to normal
 
     def Cols(self):
