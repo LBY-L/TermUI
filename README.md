@@ -47,19 +47,16 @@ A text based library, ncurses like, fully written in python without external lib
 ---
 
 ## Demos 
-
-**/Test/keysmove.py**
+**/Test/windows.py**
 ```python
 import TermUI
-from time import sleep
 Term = TermUI.screen()
 
-def Main():
-    stdscr = Term.Init()
-    Term.Corners(stdscr)
+def Main(screen):
     y = Term.Lines()
     x = Term.Cols()
-    Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
+    Term.Corners(screen)
+    Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
     while True:
         
         window = Term.Win(1, 1, x-2, (y-2)//2)
@@ -87,42 +84,39 @@ def Main():
 Term.Wrapper(func=Main, asciiMode=False)
 ```
 ---
-
-**/Test/windows.py**
+**/Test/keysmove.py**
 ```python
 import TermUI
-from time import sleep
+
 Term = TermUI.screen()
 
-def Main():
-    stdscr = Term.Init()
-    Term.Corners(stdscr)
-    y = Term.Lines()
+def Main(screen):
+    posX = 1
+    posY = 1
     x = Term.Cols()
-    Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
+    y = Term.Lines()
+    mystr = "Move with wasd!"
     while True:
+        Term.Corners(screen) # This si in the loop 'cause will be re-written
+        Term.AddStr(1, 0, mystr, screen, color=TermUI.Cyan()); mystr = ""
         
-        window = Term.Win(1, 1, x-2, (y-2)//2)
-        window2 = Term.Win(1, y//2, (x-2)//2, (y-2)//2)
-        window3 = Term.Win(x//2, y//2, (x-2)//2, (y-2)//2)
-
-        Term.Corners(window, color=TermUI.Green())
-        Term.Corners(window2, color=TermUI.Red())
-        Term.Corners(window3, color=TermUI.Blue())
-
-        Term.AddStr(1, 1, "This is TermUI", window, color=TermUI.Green())
-        Term.AddStr(1, 1, "This is a window", window2, color=TermUI.Red())
-        Term.AddStr(1, 1, "This is other window", window3, color=TermUI.Blue())
-
-        Term.WRefresh(window)
-        Term.WRefresh(window2)
-        Term.WRefresh(window3)
-
+        Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+        Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
+        
         Term.Update()
 
+        Term.Clear(screen) # Clear the buffer off screen
         key = TermUI.getchar()
-        if key == 3: # Key 3 = Ctrl + C
+        if key == 3:
             break
+        if key == 119:
+            posY -= 1
+        if key == 115:
+            posY += 1
+        if key == 97:
+            posX -= 1
+        if key == 100:
+            posX += 1
 
 Term.Wrapper(func=Main, asciiMode=False)
 ```

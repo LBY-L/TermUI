@@ -1,13 +1,11 @@
 import TermUI
-from time import sleep
 Term = TermUI.screen()
 
-def Main():
-    stdscr = Term.Init()
-    Term.Corners(stdscr)
+def Main(screen):
     y = Term.Lines()
     x = Term.Cols()
-    Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
+    Term.Corners(screen)
+    Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
     while True:
         
         window = Term.Win(1, 1, x-2, (y-2)//2)

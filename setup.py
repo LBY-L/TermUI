@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="TermUI",
     python_requires='>=3.8',
-    version="1.0.2",
+    version="1.0.3",
     author="LBY_L",
     license='GNU General Public License 3.0 (GPL 3.0)',
     packages=find_packages(),

@@ -1,23 +1,23 @@
 import TermUI
+
 Term = TermUI.screen()
 
-def Main():
-    stdscr = Term.Init()
+def Main(screen):
     posX = 1
     posY = 1
     x = Term.Cols()
     y = Term.Lines()
     mystr = "Move with wasd!"
     while True:
-        Term.Corners(stdscr) # This si in the loop 'cause will be re-written
-        Term.AddStr(1, 0, mystr, stdscr, color=TermUI.Cyan()); mystr = ""
+        Term.Corners(screen) # This si in the loop 'cause will be re-written
+        Term.AddStr(1, 0, mystr, screen, color=TermUI.Cyan()); mystr = ""
         
-        Term.AddStr(x-14, y-1, "Exit Ctrl + C", stdscr, color=TermUI.Red())
-        Term.AddChr(posX, posY, "x", stdscr, color=TermUI.Green())
+        Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+        Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
         
         Term.Update()
 
-        Term.Clear(stdscr) # Clear the buffer off screen
+        Term.Clear(screen) # Clear the buffer off screen
         key = TermUI.getchar()
         if key == 3:
             break

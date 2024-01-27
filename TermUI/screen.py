@@ -25,8 +25,8 @@ class screen:
     def Update(self):
         stdout.buffer.write(bytes("\x1b[H" + '\n'.join([''.join(n) for n in self.Stdscr]), encoding="utf-8"))
         
-    def Init(self):
-        self.width, self.height = get_terminal_size().columns, get_terminal_size().lines
+    def _Init(self):
+        self.width, self.height = get_terminal_size().columns, get_terminal_size().lines 
         self.Stdscr = self._Buffer(self.width, self.height)
 
         return [0, 0, self.Stdscr] # Return stdscr properties
@@ -34,14 +34,16 @@ class screen:
     def Wrapper(self, func, asciiMode=False):
         self.asciiMode = asciiMode
         stdout.buffer.write(b"\x1b[?1049h\x1b[?25l")
-        func()
+
+        func(screen=self._Init())
+
         stdout.buffer.write(b"\x1b[?1049l\x1b[?25h") # Reset to normal
 
     def Cols(self):
         return self.width
     
     def Lines(self):
-        return self.height
+        return  self.height
 
     def Clear(self, win=list):
         Win = win[2]
