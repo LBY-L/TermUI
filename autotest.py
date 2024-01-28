@@ -1,5 +1,5 @@
+import os
 def Files():
-    import os
     file = open('README.md', 'a')
     for i in os.listdir("Tests"):
         with open('Tests/' + i, 'r') as Test:
@@ -7,7 +7,6 @@ def Files():
     file.close()
 
 def Run():
-    import os
     try:
         os.system("pip3 install .")
     except:
@@ -24,10 +23,19 @@ def Run():
     print("\nTest Compleated!")
     
 if __name__ == "__main__":
-    Question = input("Do you want to write Tests/ files to README.md? (y/n) ")
-    if Question == "y" or "yes":
+    Green = "\x1b[32m"
+    Yellow = "\x1b[33m"
+    Red = "\x1b[91m"
+    Magenta = "\x1b[35m"
+    Reset = "\x1b[0m"
+    
+    Question = input(f"{Green}Do you want to write Tests/ files to README.md? ({Yellow}y{Reset}/{Red}n{Reset}/{Magenta}c{Reset}{Green}){Reset} ")
+    Question = Question.lower()
+    if Question == "y" or Question == "yes":
         Run()
         Files()
-    elif Question == "n" or "no":
+    elif Question == "n" or Question == "no":
         Run()
+    elif Question == "c" or Question == "cancel":
+        pass
 
