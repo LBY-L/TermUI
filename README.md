@@ -48,7 +48,43 @@ A text based library, ncurses like, fully written in python without external lib
 ---
 
 ## Demos 
-**/Test/windows.py**
+
+**/Tests/keysmove.py**
+```python
+import TermUI
+Term = TermUI.screen()
+
+def Main(screen):
+    posX = 1
+    posY = 1
+    x = Term.Cols()
+    y = Term.Lines()
+    Term.Corners(screen)
+    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
+    while True:
+        Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+        Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
+        
+        Term.Update()
+
+        Term.Clear(screen) # Clear the buffer off screen
+        Term.Corners(screen)
+        key = TermUI.getchar()
+        if key == 3:
+            break
+        if key == 119:
+            posY -= 1
+        if key == 115:
+            posY += 1
+        if key == 97:
+            posX -= 1
+        if key == 100:
+            posX += 1
+
+Term.Wrapper(func=Main, asciiMode=False)
+```
+
+**/Tests/windows.py**
 ```python
 import TermUI
 Term = TermUI.screen()
@@ -84,11 +120,10 @@ def Main(screen):
 
 Term.Wrapper(func=Main, asciiMode=False)
 ```
----
-**/Test/keysmove.py**
+
+**/Tests/cursormove.py**
 ```python
 import TermUI
-
 Term = TermUI.screen()
 
 def Main(screen):
@@ -96,17 +131,61 @@ def Main(screen):
     posY = 1
     x = Term.Cols()
     y = Term.Lines()
-    mystr = "Move with wasd!"
+    Term.Corners(screen)
+    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
     while True:
-        Term.Corners(screen) # This si in the loop 'cause will be re-written
-        Term.AddStr(1, 0, mystr, screen, color=TermUI.Cyan()); mystr = ""
+        # This si in the loop 'cause will be re-written
+        Term.AddStr(1,1,"This is a little bit of text", screen, color=TermUI.Red())
+        Term.AddStr(1,2,"This is a more text that its really cool", screen, color=TermUI.Magenta())
+        Term.AddStr(1,3,"Finally this is all text", screen, color=TermUI.Blue())
         
         Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
-        Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
+        Term.SetCursor(posX, posY, screen)
         
         Term.Update()
 
         Term.Clear(screen) # Clear the buffer off screen
+        Term.Corners(screen) 
+        key = TermUI.getchar()
+        if key == 3:
+            break
+        if key == 119:
+            posY -= 1
+        if key == 115:
+            posY += 1
+        if key == 97:
+            posX -= 1
+        if key == 100:
+            posX += 1
+
+Term.Wrapper(func=Main, asciiMode=False)
+```
+
+**/Tests/winscroll.py**
+```python
+import TermUI
+Term = TermUI.screen()
+
+def Main(screen):
+    posX = 1
+    posY = 1
+    x = Term.Cols()
+    y = Term.Lines()
+    Window = Term.Win(1, 1, 14, 7)
+    Term.Corners(Window, color=TermUI.Cyan())
+    Term.AddStr(1, 1, "Some content", Window, color=TermUI.Blue())
+
+    Term.Corners(screen)
+    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Blue())
+    while True:
+        Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+        Term.WinMove(posX, posY, Window)
+        
+        Term.WRefresh(Window)
+        Term.Update()
+
+        Term.Clear(screen) # Clear the buffer off screen
+        Term.Corners(screen)
         key = TermUI.getchar()
         if key == 3:
             break

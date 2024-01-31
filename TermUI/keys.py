@@ -1,4 +1,7 @@
 def getchar():
+    """
+    getchar: Wait for a keypress and return their code
+    """
     # Returns a single character from standard input
     import os
     ch = ''

@@ -6,12 +6,17 @@ def Main(screen):
     posY = 1
     x = Term.Cols()
     y = Term.Lines()
+    Window = Term.Win(1, 1, 14, 7)
+    Term.Corners(Window, color=TermUI.Cyan())
+    Term.AddStr(1, 1, "Some content", Window, color=TermUI.Blue())
+
     Term.Corners(screen)
-    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
+    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Blue())
     while True:
         Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
-        Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
+        Term.WinMove(posX, posY, Window)
         
+        Term.WRefresh(Window)
         Term.Update()
 
         Term.Clear(screen) # Clear the buffer off screen
