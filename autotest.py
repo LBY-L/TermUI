@@ -1,4 +1,4 @@
-import os
+import os, shutil
 def Files():
     file = open('README.md', 'a')
     for i in os.listdir("Tests"):
@@ -12,11 +12,8 @@ def Run():
     except:
         os.system("pip3 install --break-system-packages .")
     
-    try:
-        os.remove("TermUI.egg-info")
-        os.remove("build")
-    except:
-        pass
+    shutil.rmtree("TermUI.egg-info")
+    shutil.rmtree("build")
 
     for i in os.listdir("Tests"):
         os.system("python3 Tests/" + i)
