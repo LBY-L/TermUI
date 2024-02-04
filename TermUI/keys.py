@@ -17,6 +17,7 @@ def getchar():
             ch = sys.stdin.read(1)
         finally:
             termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+
     return ord(ch)
 
 # Source: https://gist.github.com/jasonrdsouza/1901709

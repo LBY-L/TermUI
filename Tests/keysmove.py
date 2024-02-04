@@ -7,7 +7,7 @@ def Main(screen):
     x = Term.Cols()
     y = Term.Lines()
     Term.Corners(screen)
-    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
+    Term.AddStr(1, 0, "Move cursor with arrow keys!", screen, color=TermUI.Cyan())
     while True:
         Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
         Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
@@ -27,5 +27,7 @@ def Main(screen):
             posX -= 1
         if key == 100:
             posX += 1
+
+        Term.AddStr(1, 0, f"Code = {str(key)} Key = {chr(key)}", screen, color=TermUI.Blue())
 
 Term.Wrapper(func=Main, asciiMode=False)

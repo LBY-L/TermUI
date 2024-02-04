@@ -7,10 +7,8 @@ def Files():
     file.close()
 
 def Run():
-    try:
-        os.system("pip3 install .")
-    except:
-        os.system("pip3 install --break-system-packages .")
+    os.system("pip3 install .")
+    os.system("pip3 install --break-system-packages .")
     
     shutil.rmtree("TermUI.egg-info")
     shutil.rmtree("build")

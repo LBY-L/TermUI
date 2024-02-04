@@ -2,6 +2,7 @@ from os import get_terminal_size
 from sys import stdout
 from re import compile
 from os import name
+from TermUI.keys import getchar
 
 class screen:
     def _NoAnsi(self, text):  
@@ -67,7 +68,7 @@ class screen:
         Win = win[2]
         for i, n in enumerate(Win): # Some weird problem in memory
             Win[i] = [" "] * len(Win[0])
-    
+
     def SetCursor(self, x=int, y=int, win=list):
         """
         SetCursor: Set a simulated cursor not a real cursor at x and y cordinates
@@ -93,13 +94,17 @@ class screen:
         WinMove: Move window to x and y cordinates
         """
         win[0], win[1] = x, y
-    
-    def WRefresh(self, win=list):
+        
+    def WRefresh(self, win=list, screen=None):
+        if screen == None:
+            screen = self.Stdscr
+        else:
+            screen = screen[2]
         """
-        WRefresh: Refresh the windows to the buffer "Note: Doesn't update to the screen"
+        WRefresh: Refresh the windows to a screen "Note: Doesn't update the actual screen"
         """
         x, y, Win = win[0], win[1], win[2]
-        self._Plotter(Win, x, y, self.Stdscr)
+        self._Plotter(Win, x, y, screen)
     
     def Corners(self, win=list, color=""):
         """
