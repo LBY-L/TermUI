@@ -3,7 +3,7 @@ def Files():
     file = open('README.md', 'a')
     for i in os.listdir("Tests"):
         with open('Tests/' + i, 'r') as Test:
-            file.write("\n**/Tests/" + i +"**\n```python\n" + Test.read() + "```\n")
+            file.write("\n**/Tests/" + i +"**\n```python\n" + Test.read() + "\n```\n")
     file.close()
 
 def Run():

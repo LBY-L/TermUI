@@ -60,4 +60,3 @@ def Main(screen):
         Term.AddStr(1, 2, "Text: "+ str(text), screen)
 
 Term.Wrapper(func=Main, asciiMode=False)
-

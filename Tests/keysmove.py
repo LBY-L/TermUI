@@ -7,7 +7,7 @@ def Main(screen):
     x = Term.Cols()
     y = Term.Lines()
     Term.Corners(screen)
-    Term.AddStr(1, 0, "Move cursor with arrow keys!", screen, color=TermUI.Cyan())
+    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
     while True:
         Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
         Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
