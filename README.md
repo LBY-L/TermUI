@@ -48,7 +48,6 @@ A text based library, ncurses like, fully written in python without external lib
 ---
 
 ## Demos 
-
 **/Tests/keysmove.py**
 ```python
 import TermUI
@@ -60,7 +59,7 @@ def Main(screen):
     x = Term.Cols()
     y = Term.Lines()
     Term.Corners(screen)
-    Term.AddStr(1, 0, "Move with wasd!", screen, color=TermUI.Cyan())
+    Term.AddStr(1, 0, "Move cursor with arrow keys!", screen, color=TermUI.Cyan())
     while True:
         Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
         Term.AddChr(posX, posY, "x", screen, color=TermUI.Green())
@@ -80,6 +79,8 @@ def Main(screen):
             posX -= 1
         if key == 100:
             posX += 1
+
+        Term.AddStr(1, 0, f"Code = {str(key)} Key = {chr(key)}", screen, color=TermUI.Blue())
 
 Term.Wrapper(func=Main, asciiMode=False)
 ```
@@ -158,8 +159,7 @@ def Main(screen):
         if key == 100:
             posX += 1
 
-Term.Wrapper(func=Main, asciiMode=False)
-```
+Term.Wrapper(func=Main, asciiMode=False)```
 
 **/Tests/winscroll.py**
 ```python
@@ -200,3 +200,108 @@ def Main(screen):
 
 Term.Wrapper(func=Main, asciiMode=False)
 ```
+
+**/Tests/inputfield.py**
+```python
+import TermUI
+Term = TermUI.screen()
+
+def Main(screen):
+    text = ""
+    posX = 0
+    posY = 0
+    x = Term.Cols()
+    y = Term.Lines()
+    width = 40
+    Field = Term.Win(8, 1, width, 1)
+    Term.Corners(screen)
+    Term.AddStr(1, 0, "Move cursor with arrow keys!", screen, color=TermUI.Cyan())
+    Term.AddStr(0, 0, " " * (width-1) , Field, color="\x1b[4m")
+
+    Term.AddStr(1, 2, "Text: "+ str(text), screen)
+
+    while True:
+        Term.AddStr(1, 1, "Field:", screen)
+        Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+
+        Term.SetCursor(posX, posY, Field)
+        Term.WRefresh(Field)
+
+        Term.Update()
+
+        Term.Clear(screen) # Clear the buffer off screen
+        Term.Clear(Field)
+        Term.Corners(screen)
+
+        key = TermUI.getchar()
+        
+        if key == 3:
+            break
+        
+        if not(key == 27 or key == 91 or key == 126 or key == 13):
+            if key == 68:
+                posX -= 1
+            elif key == 67:
+                posX += 1
+            elif key == 127:
+                text = text[:posX-1] + text[posX:]
+                posX -= 1
+            elif key == 51:
+                text = text[:posX] + text[posX+1:]
+            else:
+                posX += 1
+                text = text[:posX-1] + chr(key) + text[posX-1:] 
+                text = text[0:width-1]
+        
+        if posX < 0:
+            posX = 0
+        elif posX > width-1:
+            posX = width-1
+        elif posX > len(text):
+            posX = len(text)
+
+        Term.AddStr(0, 0, str(text).ljust(width-1, " "), Field, color="\x1b[4m")
+        
+        Term.AddStr(1, 2, "Text: "+ str(text), screen)
+
+Term.Wrapper(func=Main, asciiMode=False)
+
+```
+
+**/Tests/nestedwindow.py**
+```python
+import TermUI
+Term = TermUI.screen()
+
+def Main(screen):
+    y = Term.Lines()
+    x = Term.Cols()
+    Term.Corners(screen)
+    Term.AddStr(x-14, y-1, "Exit Ctrl + C", screen, color=TermUI.Red())
+    while True:
+        
+        window = Term.Win(1, 1, x-2, y-2)
+        window2 = Term.Win(5, 2, 100, 20)
+        window3 = Term.Win(17, 1, 50, 10)
+
+        Term.Corners(window2, color=TermUI.Red())
+        Term.Corners(window3, color=TermUI.Blue())
+        Term.Corners(window, color=TermUI.Green())
+
+        Term.AddStr(1, 1, "This is TermUI", window, color=TermUI.Green())
+        Term.AddStr(1, 1, "This is a window", window2, color=TermUI.Red())
+        Term.AddStr(1, 1, "This is other window", window3, color=TermUI.Blue())
+
+        Term.WRefresh(window)
+        Term.WRefresh(window2, window) # Refresh win2 to win
+        Term.WRefresh(window3, window2) # Refresh win3 to win2
+        Term.WRefresh(window2, window) # Refreshes win2 to win for show the changes in win3
+        Term.WRefresh(window) # Refreshes win for show the changes in win2 nested: win3
+
+        Term.Update()
+
+        key = TermUI.getchar()
+        if key == 3: # Key 3 = Ctrl + C
+            break
+
+Term.Wrapper(func=Main, asciiMode=False)```
